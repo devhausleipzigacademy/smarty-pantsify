@@ -58,6 +58,7 @@ export default function Feed() {
     const res = await fetch(
       "https://www.reddit.com/search.json?limit=10&q=cats"
     ).then((res) => res.json());
+    return res;
   }
 
   console.log(data);
