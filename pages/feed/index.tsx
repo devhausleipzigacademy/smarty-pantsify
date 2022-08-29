@@ -8,7 +8,10 @@ import { randomize } from "../../utilities/randomize";
 export default function Feed() {
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("All");
-  const tracks = useTracks();
+  const { data: tracks, isLoading: tracksLoading } = useQuery<Tracks>(
+    ["tracks"],
+    () => fetch("http://localhost:3000/api/tracks").then((res) => res.json())
+  );
 
   const limit = "100";
 
@@ -16,7 +19,7 @@ export default function Feed() {
     setSearch(e.target.value);
   }
 
-  const redditUrl = "https://www.reddit.com/search.json";
+  const redditUrl = "https://api.reddit.com/search.json";
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -25,8 +28,7 @@ export default function Feed() {
 
   async function getFeed() {
     if (query === "All") {
-      const tracks: Tracks = [];
-
+      if (!tracks) return;
       const searchResults = await Promise.all(
         tracks.map(({ title }) =>
           fetch(`${redditUrl}?limit=20&q=${title}&top`).then((res) =>
@@ -43,20 +45,18 @@ export default function Feed() {
     } else {
       const searchResults = await fetch(
         `${redditUrl}?limit=${limit}&q=${query}&top`
-      ).then((res) => res.json());
+      ).then((res) => res.json()); // const tracks: Tracks = [];
       return searchResults.data.children;
     }
   }
 
-  const { data: feed, isLoading } = useQuery<any[]>(["feed"], getFeed);
+  const { data: feed, isLoading } = useQuery<any[]>(["feed"], getFeed, {
+    enabled: !!tracks?.length,
+  });
 
   useEffect(() => {
-    try {
-      getFeed();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [query]);
+    console.log(feed);
+  }, [feed]);
 
   return (
     <div className=" ">
@@ -64,22 +64,27 @@ export default function Feed() {
       <div className="mt-10 flex flex-row items-end justify-between">
         <div className="relative   inline-block w-64">
           <p>Filter by Tracks</p>
-          <select
-            onChange={(e) => {
-              setQuery(e.target.value);
-            }}
-            className=" focus:shadow-outline w-full    appearance-none rounded px-4 py-2 pr-8 leading-tight shadow focus:outline-none"
-          >
-            <option disabled value="">
-              Select Track
-            </option>
-            <option value="All">All</option>
-            {tracks.map((track) => (
-              <option key={track.id} value={track.title}>
-                {track.title}
+          {tracksLoading ? (
+            <p>Tracks Loading...</p>
+          ) : (
+            <select
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+              className=" focus:shadow-outline w-full appearance-none rounded px-4 py-2 pr-8 leading-tight shadow focus:outline-none"
+            >
+              <option disabled value="">
+                Select Track
               </option>
-            ))}
-          </select>
+              <option value="All">All</option>
+              {tracks &&
+                tracks.map((track: any) => (
+                  <option key={track.id} value={track.title}>
+                    {track.title}
+                  </option>
+                ))}
+            </select>
+          )}
           <div className="pointer-events-none absolute  inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
               className="text mt-6 h-6 w-9 fill-black text-black"
