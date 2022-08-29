@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { Post } from "../../components/post";
 import { Tracks } from "../../types/tracks";
 import { dbAxios, redditAxios } from "../../utilities/axios";
 import { randomize } from "../../utilities/randomize";
-import { Post } from "./post";
 
 export default function Feed() {
   const [tracks, setTracks] = useState([] as Tracks);
@@ -51,8 +52,18 @@ export default function Feed() {
     }
   }, [query]);
 
+  const { data, result } = useQuery(["feed"], getFeed);
+
+  async function getFeed() {
+    const res = await fetch(
+      "https://www.reddit.com/search.json?limit=10&q=cats"
+    ).then((res) => res.json());
+  }
+
+  console.log(data);
+
   return (
-    <div className=" ">
+    <div className="p-56">
       {/* <Youtube /> */}
       <div className="flex flex-row mt-10 items-end justify-between">
         <div className="inline-block   relative w-64">
