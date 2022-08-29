@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Post } from "../../components/post";
 import { Tracks } from "../../types/tracks";
-import { dbAxios, redditAxios } from "../../utilities/axios";
+import { useTracks } from "../../utilities/axios";
 import { randomize } from "../../utilities/randomize";
 
 export default function Feed() {
-  const [tracks, setTracks] = useState([] as Tracks);
-  const [articles, setArticles] = useState<any[]>([]);
   const [search, setSearch] = useState("");
-  const [query, setQuery] = useState("cats");
+  const [query, setQuery] = useState("All");
+  const tracks = useTracks();
 
   const limit = "100";
 
@@ -17,73 +16,73 @@ export default function Feed() {
     setSearch(e.target.value);
   }
 
+  const redditUrl = "https://www.reddit.com/search.json";
+
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setQuery(search);
   }
 
+  async function getFeed() {
+    if (query === "All") {
+      const tracks: Tracks = [];
+
+      const searchResults = await Promise.all(
+        tracks.map(({ title }) =>
+          fetch(`${redditUrl}?limit=20&q=${title}&top`).then((res) =>
+            res.json()
+          )
+        )
+      );
+
+      const posts = searchResults.map((response) => {
+        return response.data.children;
+      });
+
+      return randomize(posts.flat());
+    } else {
+      const searchResults = await fetch(
+        `${redditUrl}?limit=${limit}&q=${query}&top`
+      ).then((res) => res.json());
+      return searchResults.data.children;
+    }
+  }
+
+  const { data: feed, isLoading } = useQuery<any[]>(["feed"], getFeed);
+
   useEffect(() => {
     try {
-      (async () => {
-        if (query === "Random") {
-          const tracks: Tracks = await dbAxios.get("/tracks");
-
-          const searchResults = await Promise.all(
-            tracks.map(({ title }) =>
-              redditAxios.get(`?limit=20&q=${title}&top`)
-            )
-          );
-
-          const posts = searchResults.map((response) => {
-            return response.data.children;
-          });
-
-          setArticles(randomize(posts.flat()));
-        } else {
-          const searchResults = await redditAxios.get(
-            `?limit=${limit}&q=${query}&top`
-          );
-
-          setArticles(searchResults.data.children);
-        }
-      })();
+      getFeed();
     } catch (error) {
       console.log(error);
     }
   }, [query]);
 
-  const { data, result } = useQuery(["feed"], getFeed);
-
-  async function getFeed() {
-    const res = await fetch(
-      "https://www.reddit.com/search.json?limit=10&q=cats"
-    ).then((res) => res.json());
-    return res;
-  }
-
-  console.log(data);
-
   return (
-    <div className="p-56">
+    <div className=" ">
       {/* <Youtube /> */}
-      <div className="flex flex-row mt-10 items-end justify-between">
-        <div className="inline-block   relative w-64">
+      <div className="mt-10 flex flex-row items-end justify-between">
+        <div className="relative   inline-block w-64">
           <p>Filter by Tracks</p>
           <select
             onChange={(e) => {
               setQuery(e.target.value);
             }}
-            className=" appearance-none w-full    px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            className=" focus:shadow-outline w-full    appearance-none rounded px-4 py-2 pr-8 leading-tight shadow focus:outline-none"
           >
-            <option value="">Select Track</option>
-            <option value="Random">Random</option>
+            <option disabled value="">
+              Select Track
+            </option>
+            <option value="All">All</option>
             {tracks.map((track) => (
-              <option value={track.title}>{track.title}</option>
+              <option key={track.id} value={track.title}>
+                {track.title}
+              </option>
             ))}
           </select>
           <div className="pointer-events-none absolute  inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
-              className="fill-black text-black text mt-6 h-6 w-9"
+              className="text mt-6 h-6 w-9 fill-black text-black"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >
@@ -95,13 +94,13 @@ export default function Feed() {
           <div className="flex items-center  border-b border-teal-500 py-2">
             <input
               onChange={handleInput}
-              className="appearance-none bg-transparent border-none w-full text-gray-800  text-l font-medium mr-3 py-1 px-2 leading-tight focus:outline-none"
+              className="text-l mr-3 w-full appearance-none border-none  bg-transparent py-1 px-2 font-medium leading-tight text-gray-800 focus:outline-none"
               type="search"
               placeholder=" Reddit/r/..."
             />
             <button
-              className="flex-shrink-0 bg-teal-500
-						hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+              className="flex-shrink-0 rounded
+                          border-4 border-teal-500 bg-teal-500 py-1 px-2 text-sm text-white hover:border-teal-700 hover:bg-teal-700"
               type="submit"
             >
               Search
@@ -110,16 +109,17 @@ export default function Feed() {
         </form>
       </div>
 
-      <div className="flex  relative flex-col  pl-10 h-full w-full mt-20 no-scrollbar items-center justify-evenly  gap-20">
+      <div className="no-scrollbar  relative mt-20  flex h-full w-full flex-col items-center justify-evenly gap-20  pl-10">
         {/* TODO:Add Loading State */}
         {/* TODO:Nothing found state */}
-        {articles
-          // TODO: Type your shit
-          .filter((post: any) => post.data.post_hint === "image")
-          .filter((post) => post.data.domain !== "i.imgur.com")
-          .map((post: any) => (
-            <Post data={post.data} query={query} />
-          ))}
+        {feed &&
+          feed
+            // TODO: Type your shit
+            .filter((post: any) => post.data.post_hint === "image")
+            .filter((post) => post.data.domain !== "i.imgur.com")
+            .map((post: any) => (
+              <Post key={post.data.id} data={post.data} query={query} />
+            ))}
       </div>
     </div>
   );
