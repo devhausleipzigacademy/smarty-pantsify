@@ -1,22 +1,22 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Task } from "@prisma/client";
+import { Resource } from "@prisma/client";
 import { prisma } from "../../../prisma/db";
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<Task | { message: string; error: any }>
+	res: NextApiResponse<Resource | { message: string; error: any }>
 ) {
 	try {
 		if (req.method === "GET") {
-			const taskId = req.query.taskId as string;
+			const resourceId = req.query.resourceId as string;
 
-			const task = await prisma.task.findFirstOrThrow({
+			const resource = await prisma.resource.findFirstOrThrow({
 				where: {
-					id: taskId,
+					id: resourceId,
 				},
 			});
 
-			res.status(201).json(task);
+			res.status(201).json(resource);
 		}
 	} catch (err) {
 		res.status(404).send({
