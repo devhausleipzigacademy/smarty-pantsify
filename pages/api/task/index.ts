@@ -46,13 +46,13 @@ export default async function handler(
     if (req.method === "POST") {
       const data = req.body;
 
-      const topic = await prisma.topic.create({
+      const task = await prisma.task.create({
         data: {
           ...data,
         },
       });
 
-      res.status(201).json({ id: topic.id });
+      res.status(201).json({ id: task.id });
     }
   } catch (err) {
     res.status(404).send({
