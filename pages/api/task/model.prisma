@@ -1,0 +1,25 @@
+model User {
+  id        String   @id @default(uuid())
+  currentTask Task? @relation("currentTask",fields: [currentTaskId], references: [id])
+  currentTaskId String? @unique
+}
+
+model Topic {
+  id        String   @id @default(uuid())
+  tasks     Task[]
+}
+
+model Task {   
+  id        String @id @default(uuid())   
+  createdAt DateTime @default(now())   
+  updatedAt DateTime @updatedAt   
+  name      String   
+  deadline  DateTime    
+  topic     Topic @relation(fields: [topicId], references: [id])   
+  topicId   String   
+  description String?   
+  priority  Boolean @default(false)   
+  completed Boolean @default(false)   
+  timeSpentInMinutes Int @default(0)
+  userCurrentTask   User? @relation("currentTask")
+}

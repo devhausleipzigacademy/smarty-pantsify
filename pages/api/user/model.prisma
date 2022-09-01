@@ -7,7 +7,7 @@ model Track {
 
 model Topic {
     id              String   @id @default(uuid())
-    userCurrentTopic  User?  @relation("currentTopic") 
+    userCurrentTopic  User?  @relation("currentTopic")
 }
 
 model Task {

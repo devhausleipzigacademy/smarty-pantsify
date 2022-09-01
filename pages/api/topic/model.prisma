@@ -1,23 +1,19 @@
 
 model Track {
     id        String   @id @default(uuid())
-    user      User @relation("userTracks",fields: [userId], references: [id])
-    userId    String
-    userCurrentTrack  User? @relation("currentTrack")
-}
-
-model Topic {
-    id              String   @id @default(uuid())
-    userCurrentTopic  User?  @relation("currentTopic") 
+    topics    Topic[]
 }
 
 model Task {
     id              String   @id @default(uuid())
-    userCurrentTask   User? @relation("currentTask")
+    topic     Topic @relation(fields: [topicId], references: [id])   
+    topicId   String 
 }
 
 model User {
   id        String   @id @default(uuid())
+  currentTopic Topic? @relation("currentTopic",fields: [currentTopicId], references: [id])
+  currentTopicId String? @unique
 }
 
 model Topic {
