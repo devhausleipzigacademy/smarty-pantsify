@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { useState } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AddTaskButton } from "../components/buttons/AddTaskButton";
 import { ProfilePicture } from "../components/ProfilePicture";
 import SideBar from "../components/SideBar";
