@@ -1,0 +1,5 @@
+model Resource {
+    id        String   @id @default(uuid())
+    url String
+    title String
+}
