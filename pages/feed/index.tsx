@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Post } from "../../components/post";
 import { Tracks } from "../../types/tracks";
 import { useTracks } from "../../utilities/axios";
@@ -32,9 +32,7 @@ export default function Feed() {
 			if (!tracks) return;
 			const searchResults = await Promise.all(
 				tracks.map(({ title }) =>
-					fetch(`${redditUrl}?limit=20&q=${title}&top`).then((res) =>
-						res.json()
-					)
+					fetch(`${redditUrl}?limit=20&q=${title}&top`).then((res) => res.json())
 				)
 			);
 
@@ -56,7 +54,7 @@ export default function Feed() {
 	});
 
 	useEffect(() => {
-		console.log(feed);
+		// console.log(feed);
 	}, [feed]);
 
 	return (

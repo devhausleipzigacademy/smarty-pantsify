@@ -6,7 +6,7 @@ import { Task } from "../types/TypesNConsts";
 import { User } from "../types/user";
 
 export const dbAxios = axios.create({
-	baseURL: "/smarty-pantsify/data/trackDummies.js",
+	baseURL: "http://localhost:3000/api",
 });
 
 export const redditAxios = axios.create({
