@@ -39,7 +39,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 					<SideBar />
 
 					<main className="flex-1 overflow-auto">
-						<Component {...pageProps} />;
+						<Component {...pageProps} />
 					</main>
 				</div>
 				{/* <img

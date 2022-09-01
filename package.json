@@ -3,12 +3,12 @@
 	"version": "0.1.0",
 	"private": true,
 	"prisma": {
-        "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+        "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"},
 	"scripts": {
 		"db:push": "npx prismix && npx prisma db push",
         "db:migrate": "npx prismix && npx prisma migrate dev",
         "db:seed": "npx prisma db seed",
-        "db:studio": "npx prisma studio"
+        "db:studio": "npx prisma studio",
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
