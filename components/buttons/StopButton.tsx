@@ -1,4 +1,4 @@
-import { StopSVG } from "../../public/assets/StopSVG";
+import { StopSVG } from "../../assets/StopSVG";
 import { CustomButtonProps } from "../../types/TypesNConsts";
 
 export function StopButton({ clickHandler }: CustomButtonProps) {

@@ -1,4 +1,4 @@
-import { StarSVG } from "../../public/assets/StarSVG";
+import { StarSVG } from "../../assets/StarSVG";
 import { CustomSwitchProps } from "../../types/TypesNConsts";
 
 export function StarButton({ value, clickHandler }: CustomSwitchProps) {
