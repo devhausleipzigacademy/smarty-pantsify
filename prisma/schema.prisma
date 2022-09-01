@@ -1,3 +1,12 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model User {
   id        String   @id @default(uuid())
   name      String
@@ -32,7 +41,7 @@ model Topic {
   completed Boolean
   track     Track @relation(fields: [trackId], references: [id])
   trackId   String
-  Tasks     Task[]
+  tasks     Task[]
   userCurrentTopic  User?  @relation("currentTopic") 
 }
 

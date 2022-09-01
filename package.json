@@ -2,7 +2,13 @@
 	"name": "smarty-pantsify",
 	"version": "0.1.0",
 	"private": true,
+	"prisma": {
+        "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 	"scripts": {
+		"db:push": "npx prismix && npx prisma db push",
+        "db:migrate": "npx prismix && npx prisma migrate dev",
+        "db:seed": "npx prisma db seed",
+        "db:studio": "npx prisma studio"
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
@@ -25,7 +31,8 @@
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-query": "^3.39.2",
-		"tailwindcss": "^3.1.8"
+		"tailwindcss": "^3.1.8",
+		"@prisma/client": "4.3.0"
 	},
 	"devDependencies": {
 		"@types/lodash": "^4.14.184",

@@ -1,0 +1,10 @@
+GET http://localhost:3000/api/task
+
+###
+
+GET http://localhost:3000/api/task?name=blog
+
+
+###
+
+GET http://localhost:3000/api/task?priority=true&completed=false
