@@ -1,4 +1,4 @@
-export function PlaySVG() {
+export default function PlaySVG() {
   return (
     <svg
       className="h-full w-full fill-inherit"
