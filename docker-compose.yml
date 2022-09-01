@@ -1,0 +1,18 @@
+version: "3.8"
+
+volumes:
+    pgsql-data:
+
+services:
+    pgsql:
+        image: postgres:latest
+        restart: unless-stopped
+        container_name: pgsql
+        ports:
+            - "5432:5432"
+        env_file:
+            - .env
+        volumes:
+            - type: volume
+              source: pgsql-data
+              target: /var/lib/postgresql/data

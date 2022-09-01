@@ -1,0 +1,31 @@
+model Resource {
+    id          String @id @default(uuid())
+    track Track @relation(fields: [trackId], references: [id]) 
+    trackId     String
+}
+
+model Topic {
+    id              String   @id @default(uuid())
+    track     Track @relation(fields: [trackId], references: [id])
+    trackId   String
+}
+
+model User {
+  id        String   @id @default(uuid())
+  currentTrack Track? @relation("currentTrack",fields: [currentTrackId], references: [id])
+  currentTrackId String? @unique
+  tracks    Track[]     @relation("userTracks")
+}
+
+model Track {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  completed Boolean
+  user      User @relation("userTracks",fields: [userId], references: [id])
+  userId    String
+  topics    Topic[]
+  resources Resource[]
+  userCurrentTrack  User? @relation("currentTrack")
+}

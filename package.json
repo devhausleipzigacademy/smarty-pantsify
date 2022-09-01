@@ -1,31 +1,41 @@
 {
-  "name": "smarty-pantsify",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^4.2.3",
-    "@tanstack/react-query-devtools": "^4.2.3",
-    "nanoid": "^4.0.0",
-    "next": "12.2.5",
-    "prisma": "^4.3.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "18.7.13",
-    "@types/react": "18.0.17",
-    "@types/react-dom": "18.0.6",
-    "autoprefixer": "^10.4.8",
-    "eslint": "8.23.0",
-    "eslint-config-next": "12.2.5",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^3.1.8",
-    "typescript": "4.8.2"
-  }
+    "name": "smarty-pantsify",
+    "version": "0.1.0",
+    "private": true,
+    "prisma": {
+        "seed": "npx ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    },
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "db:push": "npx prismix && npx prisma db push",
+        "db:migrate": "npx prismix && npx prisma migrate dev",
+        "db:seed": "npx prisma db seed",
+        "db:studio": "npx prisma studio"
+    },
+    "dependencies": {
+        "@prisma/client": "4.3.0",
+        "@tanstack/react-query": "^4.2.3",
+        "@tanstack/react-query-devtools": "^4.2.3",
+        "nanoid": "^4.0.0",
+        "next": "12.2.5",
+        "prisma": "^4.3.0",
+        "prismix": "^1.0.21",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "ts-node": "^10.9.1"
+    },
+    "devDependencies": {
+        "@types/node": "18.7.13",
+        "@types/react": "18.0.17",
+        "@types/react-dom": "18.0.6",
+        "autoprefixer": "^10.4.8",
+        "eslint": "8.23.0",
+        "eslint-config-next": "12.2.5",
+        "postcss": "^8.4.16",
+        "tailwindcss": "^3.1.8",
+        "typescript": "4.8.2"
+    }
 }
