@@ -19,12 +19,14 @@
         "@prisma/client": "4.3.0",
         "@tanstack/react-query": "^4.2.3",
         "@tanstack/react-query-devtools": "^4.2.3",
+        "lodash": "^4.17.21",
         "nanoid": "^4.0.0",
         "next": "12.2.5",
         "prisma": "^4.3.0",
         "prismix": "^1.0.21",
         "react": "18.2.0",
         "react-dom": "18.2.0",
+        "title-case": "^3.0.3",
         "ts-node": "^10.9.1"
     },
     "devDependencies": {
