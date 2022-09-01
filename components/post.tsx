@@ -24,7 +24,7 @@ export function Post({ data, query }: Props) {
 			<div className="relative flex flex-col h-full p-10 text-sm text-black bg-white border-2 border-black w-fit rounded-2xl border-opacity-40">
 				<p className="  absolute top-1 text-[10px]">
 					posted by u/{data.author}
-				</p>
+				</p> 
 				<p className="font-medium ">{data.title}</p>
 				<p>{data.selftext}</p>
 				<a href={redditUrl + data.permalink}>
@@ -63,7 +63,7 @@ function BookmarkButton({ data, query }: BookmarkButtonProps) {
 
 	useEffect(() => {
 		const permaLinkSafe = encodeURIComponent(data.permalink);
-		fetch(`http://localhost:3000/resources?data.url=${permaLinkSafe}`)
+		fetch(`/smarty-pantsify/data/trackDummies.js`)
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.length > 0) {

@@ -1,22 +1,22 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-// import { dbAxios } from "../utilities/axios";
+import { dbAxios } from "../../utilities/axios";
+import { groupBy } from "lodash";
 
 export default function index() {
 	const [groups, setGroups] = useState({});
 
-	// useEffect(() => {
-	// 	try {
-	// 		(async () => {
-	// 			const resources = await dbAxios.get("/resources");
-	// 			const groups = groupBy(resources.data, "track");
-	// 			setGroups(groups);
-	// 		})();
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// }, []);
+	useEffect(() => {
+		try {
+			(async () => {
+				const resources = await dbAxios.get("/resources");
+				const groups = groupBy(resources.data, "track");
+				setGroups(groups);
+			})();
+		} catch (error) {
+			console.log(error);
+		}
+	}, []);
 
 	return (
 		<div className="grid grid-flow-col grid-cols-3 grid-rows-2 gap-5 ">

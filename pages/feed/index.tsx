@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Post } from "../../components/post";
@@ -60,6 +61,9 @@ export default function Feed() {
 
 	return (
 		<div className="">
+			<Link href="../resources">
+				<a> ssssssssssssssadasdas</a>
+			</Link>
 			{/* <Youtube /> */}
 			<div className="flex flex-row items-end justify-between mt-10">
 				<div className="relative inline-block w-64">
