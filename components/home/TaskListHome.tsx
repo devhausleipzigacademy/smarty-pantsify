@@ -1,13 +1,14 @@
+import { useEffect, useState } from "react";
+import { useTasks, useUpdateTask } from "../../hooks/useTasks";
+import handler from "../../pages/api/tracks";
 import { TaskProp } from "../../types/tasks";
-import { useTasks } from "../../utilities/axios";
+import { StarButton } from "../buttons/StarButton";
 
 export function TaskListHome() {
-	// TODO: create useTasks custom hook
-	const tasks = useTasks();
+	const { data: tasks, isLoading: tasksLoading } = useTasks();
 
-	if (!tasks.length) {
-		return <p>Oops, looks like you haven't added anything yet</p>;
-	}
+	if (tasksLoading) return <p>Loading</p>;
+	if (!tasksLoading && tasks === undefined) return <p>user not found</p>;
 
 	return (
 		<div>
@@ -33,35 +34,38 @@ export function TaskListHome() {
 }
 
 function TaskItem({ task }: TaskProp) {
-	// I will probably need these here
-	//   const dispatch = useTasksDispatch() as CreateContext;
-
 	const date = JSON.stringify(task.deadline).slice(1, 11);
+	const { mutateAsync } = useUpdateTask(task.id);
+	const [completed, setCompleted] = useState(task.completed);
+
+	useEffect(() => {
+		const { id, ...taskWithoutId } = task;
+		mutateAsync({
+			...taskWithoutId,
+			completed,
+		});
+	}, [completed]);
 
 	return (
 		<>
 			<div className="flex h-full w-full flex-row items-center gap-5">
 				<input
 					type="checkbox"
+					checked={completed}
+					onChange={() => setCompleted((prev) => !prev)}
 					name="completed"
-					//   onChange={() => {
-					//     dispatch({ type: ACTIONS.COMPLETED, payload: { id: task.id } });
-					//   }}
 				/>
 
 				<p className="text-xs">{task.name}</p>
 
 				<p className="text-xs text-customTextColorLight ">Due: {date}</p>
 			</div>
-			{/* <StarButton
-        value={task.priority}
-        clickHandler={() => {
-          //   dispatch({
-          //     type: ACTIONS.PRIORITY,
-          //     payload: { id: task.id },
-          //   });
-        }}
-      /> */}
+			<StarButton
+				value={task.priority}
+				clickHandler={() => {
+					useUpdateTask(task.id);
+				}}
+			/>
 		</>
 	);
 }

@@ -1,8 +1,8 @@
 import { prisma } from "@prisma/client";
-import { groupBy } from "lodash";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useResources } from "../hooks/resources";
+import { useResources } from "../hooks/useResources";
 
 export default function Resources() {
 	const [groups, setGroups] = useState({});

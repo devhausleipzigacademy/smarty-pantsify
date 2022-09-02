@@ -3,6 +3,7 @@ import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "../styles/globals.css";
 import Head from "next/head";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -42,9 +43,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 							SetFormVisible(!formVisible);
 						}}
 					/>
-					<ProfilePicture />
-				</div>
-			</header> */}
+					</div>
+				<ProfilePicture />
+				</header> */}
 
 				<main className="flex  flex-row justify-between w-full h-[calc(100vh-7rem)] gap-6  p-6">
 					{/* <div className="flex flex-col justify-between">
@@ -56,6 +57,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 						<Component {...pageProps} />
 					</div>
 				</main>
+				<ReactQueryDevtools initialIsOpen={false} />
 			</QueryClientProvider>
 		</>
 	);

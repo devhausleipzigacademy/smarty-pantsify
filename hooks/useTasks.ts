@@ -13,10 +13,10 @@ export function useTask(taskId: string) {
 }
 
 type TaskPrePrisma = {
-	title: String;
+	name: String;
 	completed: Boolean;
-	image: String;
-	trackId: String;
+	priority: Boolean;
+	deadline: Date;
 };
 
 export function useTasks() {
@@ -32,6 +32,24 @@ export function useCreateTask() {
 		(task: TaskPrePrisma) => {
 			return fetch("http://localhost:3000/api/task", {
 				method: "POST",
+				body: JSON.stringify(task),
+			}).then((res) => res.json());
+		},
+		{
+			onSuccess: () => {
+				queryClient.invalidateQueries(["tasks"]);
+			},
+		}
+	);
+}
+
+export function useUpdateTask(taskId: string) {
+	const queryClient = useQueryClient();
+	return useMutation(
+		["tasks", taskId, "update"],
+		(task: TaskPrePrisma) => {
+			return fetch(`http://localhost:3000/api/task/${taskId}`, {
+				method: "PUT",
 				body: JSON.stringify(task),
 			}).then((res) => res.json());
 		},

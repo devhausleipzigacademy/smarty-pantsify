@@ -1,19 +1,27 @@
+import clsx from "clsx";
+
 type StatusProps = {
 	progress: number;
 };
 
-export function StatusSVG({ progress }: StatusProps) {
+const StatusSVG = ({ progress }: StatusProps) => {
 	// creating a binding for radius to more easily read and change the math below (FYI radius should be center - strokeWidth)
+
 	const radius = 47;
 	const dashArray = 2 * Math.PI * radius;
 
 	const val = `295; ${dashArray * ((100 - progress) / 100)}`;
 
 	return (
-		<svg className="h-full fill-transparent " viewBox="0 0 100 100">
+		<svg
+			className="h-full fill-transparent "
+			viewBox="0 0 100 100"
+			xmlns="http://www.w3.org/2000/svg"
+			version="1.1"
+		>
 			<circle className="fill-primary" cx="50" cy="50" r={radius / 1.5} />
 			<text
-				className="h-1/2 w-1/2 fill-customTextColorMedium font-bodyText text-sm font-semibold"
+				className="h-1/2 w-1/2 fill-customTextColorMedium  font-bodyText text-sm font-semibold"
 				dominantBaseline="middle"
 				textAnchor="middle"
 				x="50"
@@ -22,7 +30,8 @@ export function StatusSVG({ progress }: StatusProps) {
 				{progress}%
 			</text>
 			<circle
-				className="stroke-primary"
+				stroke="#FFC8A6"
+				fill="none"
 				cx="50"
 				cy="50"
 				r={radius}
@@ -40,12 +49,15 @@ export function StatusSVG({ progress }: StatusProps) {
 				></animate>
 			</circle>
 			<circle
-				className="stroke-primaryLight opacity-30"
+				fill="none"
+				stroke="RGBA(251, 187, 148, 0.25)"
+				strokeWidth="2"
 				cx="50"
 				cy="50"
 				r={radius}
-				strokeWidth="2"
 			/>
 		</svg>
 	);
-}
+};
+
+export default StatusSVG;

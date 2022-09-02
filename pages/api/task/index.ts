@@ -12,9 +12,9 @@ const postTask = z.object({
 	topicId: z.string(),
 	// TODO: once liz adds her topic hook check if you can use them to validadate the ID
 	// .refine((val)=> {const topics = useTopics})
-	description: z.string().refine((val) => val.length <= 255, {
-		message: "description cannot be more than 255 characters",
-	}),
+	description: z
+		.string()
+		.max(255, "Description cannot be more than 255 characters"),
 	priority: z.boolean(),
 	completed: z.boolean().refine((val) => val === false, {
 		message: "newly created task cannot begin as completed: true",
@@ -24,9 +24,13 @@ const postTask = z.object({
 	}),
 });
 
+type PostTask = z.infer<typeof postTask>;
+
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<Task[] | { id: string } | { message: string; error: any }>
+	res: NextApiResponse<
+		Task[] | { id: string } | { message: string; error: any }
+	>
 ) {
 	try {
 		if (req.method === "GET") {
@@ -77,7 +81,7 @@ export default async function handler(
 	} catch (err) {
 		if (err instanceof ZodError) {
 			res.status(422).send({
-				message: "Invalid Task.",
+				message: "Invalid task.",
 				error: err,
 			});
 		}

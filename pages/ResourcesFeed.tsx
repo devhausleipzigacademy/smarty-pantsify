@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { titleCase } from "title-case";
-import { useResource } from "../hooks/resources";
+import { useResource } from "../hooks/useResources";
 
 export function ResourcesFeed() {
 	// TODO: fix useparams and turn to nextjs
