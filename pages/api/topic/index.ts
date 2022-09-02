@@ -1,22 +1,21 @@
-import { Prisma, Task } from "@prisma/client";
+import { Prisma, Topic } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../prisma/db";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<
-    Task[] | { id: string } | { message: string; error: any }
+    Topic[] | { id: string } | { message: string; error: any }
   >
 ) {
   try {
     if (req.method === "GET") {
-      const { priority, completed, name } = req.query as Record<string, string>;
+      const { title, completed } = req.query as Record<string, string>;
 
-      const clauses: Array<Prisma.TaskWhereInput> = [];
+      const clauses: Array<Prisma.TopicWhereInput> = [];
 
-      if (priority) {
-        const boolPriority = JSON.parse(priority);
-        clauses.push({ priority: boolPriority });
+      if (title) {
+        clauses.push({ title: title });
       }
 
       if (completed) {
@@ -24,35 +23,29 @@ export default async function handler(
         clauses.push({ completed: boolCompleted });
       }
 
-      if (name) {
-        clauses.push({
-          name: { contains: name as string },
-        });
-      }
-
       console.log(clauses);
 
-      const tasks = await prisma.task.findMany({
+      const topicsResponse = await prisma.topic.findMany({
         where: {
           AND: clauses,
         },
         orderBy: {
-          timeSpentInMinutes: "desc",
+          createdAt: "desc",
         },
       });
 
-      res.status(201).json(tasks);
+      res.status(201).json(topicsResponse);
     }
     if (req.method === "POST") {
       const data = req.body;
 
-      const task = await prisma.task.create({
+      const topic = await prisma.topic.create({
         data: {
           ...data,
         },
       });
 
-      res.status(201).json({ id: task.id });
+      res.status(201).json({ id: topic.id });
     }
   } catch (err) {
     res.status(404).send({
