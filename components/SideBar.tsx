@@ -1,10 +1,5 @@
 import Link from "next/link";
-import { HomeSVG } from "../public/assets/HomeSVG";
-import { ResourcesSVG } from "../public/assets/ResourcesSVG";
-
-import { TracksSVG } from "../public/assets/TracksSVG";
-import { FeedSVG } from "../public/FeedSVG";
-
+import { TracksSVG } from "../public/TracksSVG";
 import { useTracks } from "../utilities/axios";
 import { Timer } from "./Timer";
 
@@ -87,7 +82,7 @@ export default function SideBar() {
 			<Link href={`/tracks/${track.id}`}>{track.title}</Link>
 		</li>
 	));
-	console.log("trackslist:" + tracks);
+
 	// TODO: put navigation into Array to make Navlink more maintainable
 
 	return (
