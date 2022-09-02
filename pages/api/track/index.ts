@@ -2,6 +2,16 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Prisma, Track } from "@prisma/client";
 import { prisma } from "../../../prisma/db";
 
+import { z, ZodError } from "zod";
+import tracks from "../../../prisma/dummyData/trackDummies";
+import trackDummies from "../../../data/trackDummies";
+
+const postTrack = z.object({
+	title: z.string(),
+});
+
+export type postTrack = z.infer<typeof postTrack>;
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<
@@ -9,31 +19,6 @@ export default async function handler(
 	>
 ) {
 	try {
-		if (req.method === "GET") {
-			const { title, completed } = req.query as Record<string, string>;
-
-			const clauses: Array<Prisma.TrackWhereInput> = [];
-
-			if (title) {
-				clauses.push({ title: title });
-			}
-
-			if (completed) {
-				const boolCompleted = JSON.parse(completed);
-				clauses.push({ completed: boolCompleted });
-			}
-
-			const tracks = await prisma.track.findMany({
-				where: {
-					AND: clauses,
-				},
-				orderBy: {
-					createdAt: "desc",
-				},
-			});
-
-			res.status(201).json(tracks);
-		}
 		if (req.method === "POST") {
 			const data = req.body;
 
