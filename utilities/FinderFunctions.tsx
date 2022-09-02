@@ -1,7 +1,4 @@
-import { Task } from "../types/tasks";
-import { Topic } from "../types/topics";
-import { Track } from "../types/tracks";
-import { useTracks } from "./axios";
+import { Track, Topic, Task } from "@prisma/client";
 
 export function findTrack(trackId: number | string): Track | undefined {
 	const tracks = useTracks();

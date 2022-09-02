@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
-
-import { Task, Tasks } from "../types/tasks";
-import { Track } from "../types/tracks";
-import { TaskProp } from "../types/TypesNConsts";
-import { useTasks } from "../utilities/axios";
+import { TaskProp } from "../../types/tasks";
+import { useTasks } from "../../utilities/axios";
 
 export function TaskListHome() {
+	// TODO: create useTasks custom hook
 	const tasks = useTasks();
 
 	if (!tasks.length) {
@@ -25,7 +22,7 @@ export function TaskListHome() {
 					.map((task) => (
 						<li
 							key={task.id}
-							className="flex items-center justify-between gap-2 p-3 bg-white border-b border-r rounded-md h-9"
+							className="flex h-9 items-center justify-between gap-2  rounded-md border-r border-b bg-white p-3"
 						>
 							<TaskItem task={task} />
 						</li>
@@ -43,7 +40,7 @@ function TaskItem({ task }: TaskProp) {
 
 	return (
 		<>
-			<div className="flex flex-row items-center w-full h-full gap-5">
+			<div className="flex h-full w-full flex-row items-center gap-5">
 				<input
 					type="checkbox"
 					name="completed"

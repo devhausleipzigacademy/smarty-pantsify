@@ -1,9 +1,9 @@
+import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import type { NextPage } from "next";
-import { RecommendedHome } from "../components/buttons/home/RecommendedHome";
-import { StatusHome } from "../components/StatusHome";
-import { TaskListHome } from "../components/TaskListHome";
-import { User } from "../types/users";
+import { RecommendedHome } from "../components/home/RecommendedHome";
+import { StatusHome } from "../components/home/StatusHome";
+import { TaskListHome } from "../components/home/TaskListHome";
 
 const Home: NextPage = () => {
 	//TODO: Create auth so that we don't have to hard code here
@@ -15,7 +15,9 @@ const Home: NextPage = () => {
 	} = useQuery<User>(
 		["user", userId],
 		() =>
-			fetch(`http://localhost:3000/api/users/${userId}`).then((res) => res.json()),
+			fetch(`http://localhost:3000/api/user/${userId}`).then((res) =>
+				res.json()
+			),
 		{ enabled: Boolean(userId) }
 	);
 	if (userLoading) return <p>Loading</p>;
