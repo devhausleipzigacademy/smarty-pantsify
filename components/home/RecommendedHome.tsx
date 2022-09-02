@@ -12,7 +12,7 @@ const items: RecommendedItem[] = [
 	{
 		key: 1,
 		link: "#1",
-		image: "RecommendedOne.jpeg",
+		image: "/images/RecommendedOne.jpeg",
 		title:
 			"The 2 best gadgets for drawing a curly line (spoiler: it will cost you a fortune)",
 		recommendationCount: "3001",
@@ -20,14 +20,14 @@ const items: RecommendedItem[] = [
 	{
 		key: 2,
 		link: "#2",
-		image: "RecommendedTwo.jpeg",
+		image: "/images/RecommendedTwo.jpeg",
 		title: "Pinching an image has never been easier with this simple trick",
 		recommendationCount: "2581",
 	},
 	{
 		key: 3,
 		link: "#3",
-		image: "RecommendedThree.jpeg",
+		image: "/images/RecommendedThree.jpeg",
 		title: "“Look, I can draw shapes”, is what this person wants to tell us",
 		recommendationCount: "2338",
 	},

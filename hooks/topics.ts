@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useTopic(topicId: string) {
 	return useQuery(
-		["topic", topicId],
+		["topics", topicId],
 		() =>
 			fetch(`http://localhost:3000/api/topic/${topicId}`).then((res) =>
 				res.json()
