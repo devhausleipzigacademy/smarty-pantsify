@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { StatusSVG } from "../public/Status";
+import { StatusSVG } from "../public/svgs/StatusSVG";
+
 import { useTasks } from "../utilities/axios";
 
 export function StatusHome() {
