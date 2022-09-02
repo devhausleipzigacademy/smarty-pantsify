@@ -26,9 +26,7 @@ const postTask = z.object({
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<
-		Task[] | { id: string } | { message: string; error: any }
-	>
+	res: NextApiResponse<Task[] | { id: string } | { message: string; error: any }>
 ) {
 	try {
 		if (req.method === "GET") {
