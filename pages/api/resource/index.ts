@@ -36,6 +36,17 @@ export default async function handler(
 				res.status(201).json(resourcesGrouped);
 			}
 
+			//TODO: check if groupby works as intended but first need to create resource data in the first place
+			const { groupBy } = req.query as Record<string, string>;
+
+			if (groupBy) {
+				const resourcesGrouped = await prisma.resource.groupBy({
+					by: ["trackId"],
+				});
+
+				res.status(201).json(resourcesGrouped);
+			}
+
 			res.status(201).json(resources);
 		}
 		if (req.method === "POST") {

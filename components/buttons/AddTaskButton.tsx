@@ -1,14 +1,14 @@
-import { PlusSVG } from "../../public/assets/PlusSVG";
-import { CustomButtonProps } from "../../types/TypesNConsts";
+import { PlusSVG } from "../../public/svgs/PlusSVG";
+import { CustomButtonProps } from "../../types/buttons";
 
 export function AddTaskButton({ clickHandler }: CustomButtonProps) {
 	return (
 		<>
 			<button
-				className="flex flex-row items-center w-48 h-12 px-5 py-3 text-lg rounded-md bg-primary justify-evenly font-bodyText "
+				className="bg-primary flex flex-row justify-evenly items-center rounded-md py-3 px-5 w-48 h-12 font-bodyText text-lg "
 				onClick={clickHandler}
 			>
-				<div className="w-auto h-2/3">
+				<div className="h-2/3 w-auto">
 					<PlusSVG />
 				</div>
 				<p>Add Task</p>
