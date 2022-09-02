@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { User } from "@prisma/client";
+import { User, Prisma } from "@prisma/client";
 import { prisma } from "../../../prisma/db";
 
 export default async function handler(
@@ -19,8 +19,15 @@ export default async function handler(
             res.status(201).json(user);
         }
     } catch (err) {
-        res.status(404).send({
-            message: "Oops, looks like we made a mistake.",
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            res.status(404).send({
+                message: "User cannot be found.",
+                error: err,
+            });
+        }
+
+        res.status(400).send({
+            message: "The server encountered an error.",
             error: err,
         });
     }

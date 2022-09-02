@@ -1,6 +1,6 @@
 model Track {
-  id        String   @id @default(uuid())
-  resources Resource[]
+    id        String   @id @default(uuid())
+    resources Resource[]
 }
 
 model Resource {
