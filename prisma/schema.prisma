@@ -64,4 +64,4 @@ model Resource {
     id          String @id @default(uuid())
     track Track @relation(fields: [trackId], references: [id]) 
     trackId     String
-}
+} 
