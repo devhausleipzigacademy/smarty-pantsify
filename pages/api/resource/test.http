@@ -1,0 +1,7 @@
+GET http://localhost:3000/api/resource
+
+###
+
+GET http://localhost:3000/api/resource?groupBy
+
+

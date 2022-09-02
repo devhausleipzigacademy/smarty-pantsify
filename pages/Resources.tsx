@@ -1,3 +1,4 @@
+import { prisma } from "@prisma/client";
 import { groupBy } from "lodash";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -8,15 +9,17 @@ export default function Resources() {
 	const { data: resources, isLoading: resourcesLoading } = useResources();
 
 	// Not sure if this is working as I am unfamiliar with lodash
-	useEffect(() => {
-		const resourceGroups = groupBy(resources, (resource) => resource.trackId);
+	// useEffect(() => {
+	// 	const resourceGroups = groupBy(resources, (resource) => resource.trackId);
 
-		setGroups(resourceGroups);
-	}, resources);
+	// 	setGroups(resourceGroups);
+	// }, resources);
 
 	if (resourcesLoading) return <p>Loading</p>;
 	if (!resourcesLoading && resources === undefined)
 		return <p>resources not found</p>;
+
+	const resourcesGrouped = prisma.resource.groupBy({ by: ["taskId"] });
 
 	return (
 		<div className="  grid grid-flow-col   gap-5  grid-cols-3 grid-rows-2 ">
