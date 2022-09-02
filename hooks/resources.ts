@@ -3,9 +3,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useResource(resourceId: string) {
 	return useQuery(
-		["resource", resourceId],
+		["resources", resourceId],
 		() =>
-			fetch(`http://localhost:3000/api/resources/${resourceId}`).then((res) =>
+			fetch(`http://localhost:3000/api/resource/${resourceId}`).then((res) =>
 				res.json()
 			),
 		{ enabled: Boolean(resourceId) }
@@ -21,7 +21,7 @@ type ResourcePrePrisma = {
 
 export function useResources() {
 	return useQuery<Resource[]>(["resources"], () =>
-		fetch("http://localhost:3000/api/resources").then((res) => res.json())
+		fetch("http://localhost:3000/api/resource").then((res) => res.json())
 	);
 }
 
@@ -48,7 +48,7 @@ export function useDeleteResource(resourceId: string) {
 	return useMutation(
 		["resources", resourceId, "delete"],
 		() =>
-			fetch(`http://localhost:3000/api/resources/${resourceId}`, {
+			fetch(`http://localhost:3000/api/resource/${resourceId}`, {
 				method: "DELETE",
 			}),
 		{ onSuccess: () => queryClient.invalidateQueries(["resources"]) }
