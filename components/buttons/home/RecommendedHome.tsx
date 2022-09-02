@@ -1,4 +1,5 @@
-import { ResourcesSVG } from "../../../public/ResourcesSVG";
+import Link from "next/link";
+import { ResourcesSVG } from "../../../public/svgs/ResourcesSVG";
 
 interface RecommendedItem {
 	key: number;
@@ -56,23 +57,23 @@ function RecommendedItem({
 }: ItemProps) {
 	return (
 		<>
-			<div className="flex h-full w-full flex-col items-center gap-y-3 px-1">
+			<div className="flex flex-col items-center w-full h-full px-1 gap-y-3">
 				<div>
 					<a href={link}>
-						<img className="cover rounded" src={image} />
+						<img className="rounded cover" src={image} />
 					</a>
 				</div>
 				<div className="flex flex-row justify-between">
 					<div className="flex w-4/5 ">
-						<h3 className="font-bodyText text-xs font-medium text-customTextColorMedium ">
-							<a href={link}>{title}</a>
+						<h3 className="text-xs font-medium font-bodyText text-customTextColorMedium ">
+							<Link href={link}>{title}</Link>
 						</h3>
 					</div>
-					<div className="flex w-1/5 flex-row items-baseline justify-end gap-1">
+					<div className="flex flex-row items-baseline justify-end w-1/5 gap-1">
 						<div className="flex h-3 self-baseline fill-customTextColorLight">
 							<ResourcesSVG />
 						</div>
-						<p className="font-bodyText text-xs text-customTextColorLight">
+						<p className="text-xs font-bodyText text-customTextColorLight">
 							{recommendationCount}
 						</p>
 					</div>

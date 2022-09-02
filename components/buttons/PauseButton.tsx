@@ -1,5 +1,5 @@
-import { PauseSVG } from "../../public/PauseSVG";
-import { PlaySVG } from "../../public/PlaySVG";
+import { PauseSVG } from "../../public/svgs/PauseSVG";
+import PlaySVG from "../../public/svgs/PlaySVG";
 import { CustomButtonProps } from "../../types/TypesNConsts";
 
 interface Props extends CustomButtonProps {
