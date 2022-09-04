@@ -1,17 +1,18 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Post } from "../../components/post";
-import { Tracks } from "../../types/tracks";
-import { useTracks } from "../../utilities/axios";
+
+import { Track } from "@prisma/client";
+import { useTracks } from "../../hooks/useTracks";
 import { randomize } from "../../utilities/randomize";
+import { Post } from "../../components/feeds/Post";
 
 export default function Feed() {
 	const [search, setSearch] = useState("");
 	const [query, setQuery] = useState("All");
-	const { data: tracks, isLoading: tracksLoading } = useQuery<Tracks>(
+	const { data: tracks, isLoading: tracksLoading } = useQuery<Track>(
 		["tracks"],
-		() => fetch("http://localhost:3000/api/tracks").then((res) => res.json())
+		() => fetch("/pages/api/track").then((res) => res.json())
 	);
 
 	const limit = "100";
