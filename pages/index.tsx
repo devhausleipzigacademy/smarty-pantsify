@@ -1,16 +1,18 @@
 import type { NextPage } from "next";
+import { useContext } from "react";
 import { RecommendedHome } from "../components/home/RecommendedHome";
 import { StatusHome } from "../components/home/StatusHome";
 import { TaskListHome } from "../components/home/TaskListHome";
-// import { TaskListHome } from "../components/home/TaskListHome";
 import { useUser } from "../hooks/useUsers";
+import { UserContext } from "../utilities/UserContext";
+
 
 const Home: NextPage = () => {
 	//TODO: Create auth so that we don't have to hard code here
-	const userId = "133b6003-1cc4-4394-aa95-c795f710b516";
-	const { data: user, isLoading: userLoading } = useUser(userId);
-	if (userLoading) return <p>Loading</p>;
-	if (!userLoading && user === undefined) return <p>user not found</p>;
+	const user = useContext(UserContext)
+
+	if (user === null) return <p>Error. Please check that the user is correctly configured.</p>
+
 	return (
 		<div className="flex flex-col w-full h-full gap-4">
 			<h2 className="text-2xl font-light ">Welcome back, {user.name}!</h2>

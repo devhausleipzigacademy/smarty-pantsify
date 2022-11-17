@@ -27,7 +27,7 @@ const StatusSVG = ({ progress }: StatusProps) => {
 				x="50"
 				y="51"
 			>
-				{progress}%
+				{Math.round(progress)}%
 			</text>
 			<circle
 				stroke="#FFC8A6"

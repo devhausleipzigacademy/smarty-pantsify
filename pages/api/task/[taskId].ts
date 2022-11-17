@@ -32,7 +32,7 @@ export default async function handler(
 			const data = putTask.parse(req.body);
 			const taskId = req.query.taskId as string;
 
-			const updatedTask = prisma.task.update({
+			const updatedTask = await prisma.task.update({
 				where: {
 					id: taskId,
 				},

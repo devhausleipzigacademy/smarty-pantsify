@@ -13,6 +13,21 @@ POSTGRES_DB=main
 DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public&connect_timeout=300
 ```
 
+Start Docker
+```sh
+docker compose up
+```
+
+Generate Primsa schema and push to database
+```sh
+npm run db:push
+```
+
+Fill database:
+```sh
+npm run db:seed
+```
+
 Then, run the development server:
 
 ```sh

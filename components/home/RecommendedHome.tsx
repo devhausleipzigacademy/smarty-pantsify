@@ -37,7 +37,7 @@ export function RecommendedHome() {
 	return (
 		<>
 			<h3 className="card-heading">Recommended For You</h3>
-			<div className="flex flex-row gap-4 px-2">
+			<div className="flex w-full h-full gap-4 px-2">
 				{items.map((item) => (
 					<RecommendedItem {...item} />
 				))}
@@ -59,10 +59,10 @@ function RecommendedItem({
 			<div className="flex h-full w-full flex-col items-center gap-y-3 px-1">
 				<div>
 					<a href={link}>
-						<img className="cover rounded" src={image} />
+						<img className="object-cover  rounded" src={image} />
 					</a>
 				</div>
-				<div className="flex flex-row justify-between">
+				<div className="flex justify-between">
 					<div className="flex w-4/5 ">
 						<h3 className="font-bodyText text-xs font-medium text-customTextColorMedium ">
 							<a href={link}>{title}</a>

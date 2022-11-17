@@ -1,14 +1,13 @@
 import { User } from "@prisma/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 
 export function useUser(userId: string) {
-	return useQuery(
+	return useQuery<User>(
 		["users", userId],
 		() =>
 			fetch(`http://localhost:3000/api/user/${userId}`).then((res) =>
 				res.json()
-			),
-		{ enabled: Boolean(userId) }
+			)
 	);
 }
 
